@@ -1,0 +1,63 @@
+# -*- coding: utf-8 -*-
+#!/usr/bin/env python3
+# Requires SpeechRecognition
+
+import speech_recognition as sr
+# from time import ctime
+import os
+from gtts import gTTS
+from playsound import playsound
+from newspaper import Article
+import webbrowser
+from more_itertools import intersperse
+from pyowm import OWM # for weather
+import time
+from datetime import datetime
+import geocoder
+import ISS_Info as iss
+import json
+import urllib
+import functions
+import phrases
+
+            
+# Initialization / Driver Code 
+if __name__ == "__main__":
+    speak("Hello there. What is your name?")
+    
+    name = get_audio()
+    if name == 0:
+        name = 'there'
+        
+    speak("Hello " + name + '.')
+    speak("What can i do for you?")
+    myname = "Marina"
+    wake = myname
+    
+while(1): 
+    
+    data = get_audio()
+    
+    if data == 0: 
+        continue
+
+    if "Marina" in str(data) or "hey Marina" in str(data) or data.count(wake) > 0:
+        speak("I'm listening . . Go ahead " + name)
+        
+    if "good morning" in str(data) or "good evening" in str(data) or "good afternoon" in str(data) or "good night" in str(data):
+        
+        meridian = time.strftime('%p')
+        greeting = str(data)
+        if (meridian == "PM" and (greeting != "good morning")) or (meridian == "AM" and greeting == "good morning"):
+            speak("hi" + greeting)
+        elif meridian == "AM":
+            speak("It is already morning " + name + ". So good morning. Hope you had a good night's sleep")
+        elif meridian == "PM":
+            speak("It is already late in the evening " + name + ". Hope you had a good day")
+                
+    if "exit" in str(data) or "bye" in str(data) or "sleep" in str(data) or "please stop" in str(data) :
+        speak("Ok. Bye "+ name+'.')
+        break
+    
+    talkback(data)
+

@@ -44,7 +44,7 @@ def get_Response(url):
 
 def read_file():
     # File path, name
-    filePath = ''
+    filePath = 'C:\\Users\\Nithya\\Documents\\Python\\Projects\\Marina_v2\\Marina_v2\\'
     fileName = 'ToDo.txt'
 
     readfile = filePath+fileName
@@ -66,7 +66,7 @@ def read_file():
     
 def write_file(data):
     # File path, name
-    filePath = ''
+    filePath = 'C:\\Users\\Nithya\\Documents\\Python\\Projects\\Marina_v2\\Marina_v2\\'
     fileName = 'ToDo.txt'
     
     readfile = filePath+fileName
@@ -99,9 +99,9 @@ def get_audio():
         return data
 
     except sr.UnknownValueError: 
-        print("Google Speech Recognition could not understand audio")
+        print("Sorry. Could not understand audio input")
     except sr.RequestError as e:
-        print("Could not request results from Google Speech Recognition service; {0}".format(e))
+        print("Could not request results from the speech recognition service; {0}".format(e))
         
     return 0
 

@@ -16,8 +16,7 @@ import geocoder
 import functions as f
 import space_info as spi
 import weather as wea
-
-open_cage_api_key = '<<Open Cage API Key>>'
+import static as s
 
 def talkback(data, person):
     myname = "Marina"
@@ -26,7 +25,7 @@ def talkback(data, person):
         f.speak("I am fine " + name + ". Thank you.")
 
     if "what is your name" in data or "who are you" in data or "identify yourself" in data:
-        f.speak("My name is " + myname + ". What can I do for you today ?")
+        f.speak("My name is " + myname + ". I am a digital assistant. What can I do for you today ? How can I be of help?")
         
     if "what is the time" in data:
         currtime = datetime.now().strftime("%I:%M %p")
@@ -86,7 +85,7 @@ def talkback(data, person):
         idx = 8
         delimiter = ''
         search_string = f.search_ops(idx, delimiter, data)
-        g = geocoder.opencage( search_string , key = open_cage_api_key)
+        g = geocoder.opencage( search_string , key = s.open_cage_api_key)
         lat = str(round(g.latlng[0],4))
         lon = str(round(g.latlng[1],4))
         
@@ -102,8 +101,8 @@ def talkback(data, person):
         #speak(flybydate.strftime("%A, %d %B %Y"))
         #speak(flybytime.strftime("%I:%M %p"))
     
-    if "Space Station crew" in data or "Space Station staff" in data:
-        f.speak("Hold on")
+    if "Space Station crew" in data or "Space Station staff" in data or "who are the Space Station crew" in data or "who are the Space Station staff" in data:
+        f.speak("Here you go")
         resp = spi.iss_crew()
         f.speak(resp)
 
@@ -152,12 +151,12 @@ def talkback(data, person):
         f.speak ("Currently the weather in " + search_string + " is " + description +" . The temperature is " + temp + " degrees Celsius and humidity is " + humidity + " percent")
 
         
-    if "weather in" in data:
-        idx = 2
+    if "how is the weather in" in data :
+        idx = 5
         delimiter = ''
         search_string = f.search_ops(idx, delimiter, data)
         
-        g = geocoder.opencage( search_string , key = open_cage_api_key)
+        g = geocoder.opencage( search_string , key = s.open_cage_api_key)
         lat = g.latlng[0]
         lon = g.latlng[1]
         
@@ -177,8 +176,7 @@ def talkback(data, person):
         search_string = f.search_ops(idx, delimiter, data)
         f.write_file(search_string)
         
-    
-    if "read my to do list" in data :
+    if "read my to do list" in data or "what is in my to do list" in data :
         f.speak("Hold on")
         f.speak("Here you go " + name)
         f.read_file()

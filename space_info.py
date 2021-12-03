@@ -7,9 +7,24 @@ Created on Fri Jan 15 11:12:55 2021
 from datetime import datetime
 import functions as f
 import ISS_Info as iss
+import static as s
 
-base_url = '<<Provide base URL here>>'
-api_key = '<<Provide the API Key here>>' # Celestrak, N2YO
+# =============================================================================
+# 
+import ssl
+# 
+try:
+    _create_unverified_https_context = ssl._create_unverified_context
+except AttributeError:
+    # Legacy Python that doesn't verify HTTPS certificates by default
+    pass
+else:
+    # Handle target environment that doesn't support HTTPS verification
+    ssl._create_default_https_context = _create_unverified_https_context
+# 
+# 
+# =============================================================================
+
 
 def visual_pass(latitude, longitude):
     lat = latitude
@@ -17,11 +32,11 @@ def visual_pass(latitude, longitude):
     req_type = 'visualpasses' # tle, visualpasses, positions, radiopasses
     norad_id = str(25544) #Default is ISS Norad Id , 20580 for Hubble
     
-    append_api_key = ('&apiKey=')+api_key
+    append_api_key = ('&apiKey=')+s.api_key
     alt = str(0) # Altitude
     dur = str(100) # duration for which pass is visible
     days = str(10) # number of days. Max is 10
-    const_url = [base_url,req_type,norad_id,lat,lon,alt,days,dur,append_api_key]
+    const_url = [s.base_url,req_type,norad_id,lat,lon,alt,days,dur,append_api_key]
     
     visual_pass_url = f.url_const_ops('/',const_url)
     visual_pass_response = f.get_Response(visual_pass_url)

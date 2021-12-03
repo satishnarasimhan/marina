@@ -7,7 +7,7 @@ import phrases as ph
             
 # Initialization / Driver Code 
 if __name__ == "__main__":
-    f.speak("Hello there. What is your name?")
+    f.speak("Hello there. This is Marina, your digital assistant. How can I be of help? What is your name?")
     
     person = f.get_audio()
     if person == 0:
@@ -28,7 +28,7 @@ while(1):
     if "Marina" in str(data) or "hey Marina" in str(data) or data.count(wake) > 0:
         f.speak("I'm listening . . Go ahead " + person)
                    
-    if "exit" in str(data) or "bye" in str(data) or "sleep" in str(data) or "please stop" in str(data) :
+    if "exit" in str(data) or "Good bye" in str(data) or "sleep" in str(data) or "please stop" in str(data) :
         f.speak("Ok. Bye "+ person +'.')
         break
     

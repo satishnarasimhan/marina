@@ -12,6 +12,8 @@ Marina has a keen interest in the International Space Station (ISS) and will bri
 
 This project has been built clearly from an academic point of view.
 
+This is now integrated with computational intelligence using Wolfram Alpha (https://www.wolframalpha.com/)
+
 Requirements
 ------------
 Packages / pip installations required are:

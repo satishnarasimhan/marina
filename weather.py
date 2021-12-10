@@ -6,14 +6,13 @@ Created on Fri Jan 15 11:55:53 2021
 """
 
 from pyowm import OWM # for weather
+import static as s
 
-owm_api_key = "<<Provide OWM API key>>"
-open_cage_api_key = '<<Provide Open Cage API key>>'
 local = 'Bengaluru, IN'
 
 def weather_info(search_string, latitude, longitude):
     # OWM API Key
-    owm = OWM(owm_api_key)
+    owm = OWM(s.owm_api_key)
     mgr = owm.weather_manager()
     search_string = search_string
     lat = latitude
@@ -29,9 +28,9 @@ def weather_info(search_string, latitude, longitude):
     
     
 def weather_info_local():
-    owm = OWM(owm_api_key)
+    owm = OWM(s.owm_api_key)
     mgr = owm.weather_manager()
-    search_string = "Bengaluru"
+    search_string = local
         
     # Search for current weather in a given city and get details
     observation = mgr.weather_at_place(local)

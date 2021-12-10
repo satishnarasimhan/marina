@@ -12,10 +12,14 @@ from playsound import playsound
 from more_itertools import intersperse
 import json
 import urllib
+import wolframalpha
+import functions as f
+import static as s
+
 
 def speak(output): 
     print(output)
-    tts = gTTS(text=output, lang='en')
+    tts = gTTS(text=output, lang='en', tld = 'co.uk') # com, co.uk, co.in, ca
     tts.save("audio.mp3")
     playsound("audio.mp3")
     os.remove("audio.mp3")
@@ -99,7 +103,7 @@ def get_audio():
         return data
 
     except sr.UnknownValueError: 
-        print("Sorry. Could not understand audio input")
+        print("Sorry. Could not understand the audio input")
     except sr.RequestError as e:
         print("Could not request results from the speech recognition service; {0}".format(e))
         
@@ -177,4 +181,67 @@ def getKeysByValue(dictOfElements, valueToFind):
         if item[1] == valueToFind:
             listOfKeys.append(item[0])
     return  listOfKeys
-     
+
+def compute(data):
+    # Taking input from user
+    query = data
+    
+    # App id obtained by the above steps
+    app_id = s.app_id
+    
+    # Instantiate wolframalpha cient with your app id i.e. client class
+    client = wolframalpha.Client(app_id)
+    
+    # Obtain a response for the query
+    resp = client.query(query)
+    
+    # We are interested only in the response text
+    answer = next(resp.results).text
+    
+    # if (str(answer) == 'None'):
+    #     answer = 'Unable to check this for you at the moment'
+        
+    try:
+        #print (next(resp.results).text)
+        f.speak (next(resp.results).text)
+    except StopIteration:
+        f.speak ("No results")
+    return answer
+  
+def get_compute_response(): 
+    rObject = sr.Recognizer()
+    audio = ''
+	
+    with sr.Microphone() as source:
+        print("Speak...") 
+        audio = rObject.listen(source, phrase_time_limit = 5) 
+    print("Stop.") # limit 5 secs 
+    
+    try: 
+        data = rObject.recognize_google(audio, language ='en') 
+        print("You : ", data)
+        f.speak("Checking this for you . . ")
+    
+        # App id obtained by the above steps
+        app_id = s.app_id
+        
+        # Instantiate wolframalpha cient with your app id i.e. client class
+        client = wolframalpha.Client(app_id)
+        
+        # Obtain a response for the query
+        resp = client.query(data)
+        
+        # Obtain response. Have a default message for no results
+        answer = next(resp.results, "None").text
+        
+        if(str(answer) == "None" or str(answer) == '(none)' or str(answer) == 'none' ):
+            f.speak("I'm sorry. I can't help you with that at the moment")
+        else:
+            f.speak(answer)
+               
+    except sr.UnknownValueError: 
+        print("Sorry. Could not understand the audio input")
+    except sr.RequestError as e:
+        print("Could not request results from the speech recognition service; {0}".format(e))
+    return 0
+    

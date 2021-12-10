@@ -21,6 +21,7 @@ import static as s
 def talkback(data, person):
     myname = "Marina"
     name = person
+ 
     if "how are you" in data:
         f.speak("I am fine " + name + ". Thank you.")
 
@@ -121,25 +122,7 @@ def talkback(data, person):
         playsound('news.mp3')
 ## Remove file after playing. There would be no need to re-run the program    
         os.remove('news.mp3')
-        
-    if "convert Fahrenheit" in data:
-        f.speak("Converting . . ")
-        data = data.split(" ")
-        fahrenheit = int(data[2])
-        celsius = str(int((fahrenheit - 32)/1.8))
-        fahrenheit = str(fahrenheit)
-        f.speak("Here you go " + name)
-        f.speak( "When converted " + fahrenheit +" degrees Fahrenheit is " + celsius + " degrees Celsius")
-
-    if "convert Celsius" in data:
-        f.speak("Converting . . ")
-        data = data.split(" ")
-        celsius = int(data[2])
-        fahrenheit = str(int((celsius*1.8) + 32))
-        celsius = str(celsius)
-        f.speak("Here you go " + name)
-        f.speak("When converted " + celsius +" degrees Celsius is " + fahrenheit + " degrees Fahrenheit")
-        
+                
     if "how is the local weather" in data:
         winfo = wea.weather_info_local()
         
@@ -180,39 +163,9 @@ def talkback(data, person):
         f.speak("Hold on")
         f.speak("Here you go " + name)
         f.read_file()
-        #resp = spi.iss_crew()
-        #f.speak(resp)
+    
+    if ("expert level knowledge" in data or "expert level check" in data or "expert level capability" in data or "expert mode" in data):
+        f.speak ("Let me see if I can help you")
+        f.speak ("Go ahead with your query")
+        f.get_compute_response()
         
-    if "what day of the week was" in data or "what day of the week is" in data:
-        # idx = 6
-        # delimiter = ''
-        # day = f.search_ops(idx, delimiter, data)
-        # idx = idx + 1
-        # month = f.search_ops(idx, delimiter, data)
-        # idx = idx + 1
-        # year = f.search_ops(idx, delimiter, data)
-        
-        print("Enter the date:")
-        day = int(input())
-        print("Enter the month:")
-        month = int(input())
-        print("Enter the year:")
-        year = int(input())
-        
-        if (year == []):
-            year = datetime.now().strftime("%Y")
-            
-        weekdays =  {
-            "Sunday" : 0        
-            ,"Monday" : 1
-            ,"Tuesday" : 2
-            ,"Wednesday" : 3
-            ,"Thursday" : 4
-            ,"Friday" : 5
-            ,"Saturday" : 6
-            }
-        
-        d = f.getKeysByValue(weekdays, f.day_of_the_week(int(year), int(month), int(day)) )
-        print(d[0])
-        f.speak( d[0])
-

@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 #!/usr/bin/env python3
-# Requires SpeechRecognition
 
 import functions as f
 import phrases as ph
             
 # Initialization / Driver Code 
 if __name__ == "__main__":
+    
     f.speak("Hello there. This is Marina, your digital assistant. How can I be of help? What is your name?")
     
     person = f.get_audio()
@@ -29,8 +29,11 @@ while(1):
         f.speak("I'm listening . . Go ahead " + person)
                    
     if "exit" in str(data) or "Good bye" in str(data) or "sleep" in str(data) or "please stop" in str(data) :
-        f.speak("Ok. Bye "+ person +'.')
-        break
+        if (person == 'there'):
+                f.speak("Ok. Bye for now")
+        else:
+            f.speak("Ok. Bye "+ person +'.')
+        break       
     
     ph.talkback(data,person)
 

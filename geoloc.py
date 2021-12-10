@@ -7,10 +7,9 @@ Incomplete - To be worked on
 """
 
 import geocoder
-
-open_cage_api_key = '<<Provide geocoder API Key here>>'
+import static as s
 
 def lat_lng(search_string):
-    g = geocoder.opencage( search_string , key = open_cage_api_key)
+    g = geocoder.opencage( search_string , key = s.open_cage_api_key)
     
     return
